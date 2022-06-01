@@ -1,0 +1,52 @@
+{
+	// Visual Studio Code snippet for creating Python extension code in C
+	// function_name is the name of the function. There can be several functions in one file.
+	// module_name is the name of the module.
+	// Each time a C function is added to the module, the following methods should be implemented:
+	//  - static PyObject* ${1:function_name}_py(PyObject* self, PyObject* args)
+	//  - static char ${1:function_name}_docs[]
+	// And an additional entry should be added to 
+	//  - static PyMethodDef module_methods[]
+	//
+	// Arnaud DESSEIN
+
+	"C extention boilerplate code for Python": {
+		"scope": "c",
+		"prefix": "py_c_ext_boilerplate",
+		"body": [
+			"#define PY_SSIZE_T_CLEAN",
+			"#include <Python.h>",
+			"",
+			"void ${1:function_name}(){",
+			"   // Add your C code here",
+			"}",
+			"",
+			"static PyObject* ${1:function_name}_py(PyObject* self, PyObject* args){",
+			"    PyObject* result = NULL;",
+			"    return result;",
+			"}",
+			"",
+			"static char ${1:function_name}_docs[] =",
+			"    \"${1:function_name}: <Write description of the function here>\\n\"",
+			"    <Write the docstring here>}",
+			"",
+			"static PyMethodDef module_methods[] = {",
+			"    {\"${2:module_name}\", (PyCFunction)${1:function_name}_py,METH_VARARGS, ${1:function_name}_docs},",
+			"    {NULL, NULL, 0, NULL}",
+			"};",
+			"",
+			"static struct PyModuleDef module_definition = {",
+			"    PyModuleDef_HEAD_INIT,",
+			"    \"${2:module_name}\",",
+			"    \"<Write the decription of the module here>\",",
+			"    -1,",
+			"    module_methods",
+			"};",
+			"",
+			"pyMODINIT_FUNC PyInit_${2:module_name}(void){",
+			"    Py_Initialize();",
+			"    return PyModule_Create(module_definition);",
+			"}"
+		]
+	}
+}
